@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    [SerializeField] public MonoBehaviour interactableMonoBehaviour = null;
+    [SerializeField] public MonoBehaviour leer = null;
     public Interaction interactableObject = null;
     public bool holdingItem = false;
 
@@ -13,7 +13,7 @@ public class CollisionDetector : MonoBehaviour
         if (!holdingItem || other.GetComponent<ItemPickUp>() == null)
         {
             interactableObject = other.GetComponent<Interaction>();
-            interactableMonoBehaviour = other.GetComponent<MonoBehaviour>();
+            leer = other.GetComponent<MonoBehaviour>();
         }
     }
 
@@ -22,6 +22,7 @@ public class CollisionDetector : MonoBehaviour
         if (interactableObject != null && interactableObject == other.GetComponent<Interaction>())
         {
             interactableObject = null;
+            leer = null;
         }
     }
 
@@ -30,7 +31,7 @@ public class CollisionDetector : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && interactableObject != null)
         {
             PerformAction();
-            interactableMonoBehaviour = null;
+            leer = null;
         }
     }
 

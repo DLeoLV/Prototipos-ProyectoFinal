@@ -5,4 +5,9 @@ using UnityEngine;
 public class RecyclableObjectData : MonoBehaviour
 {
     public RecyclableObject recyclableObject;
+    public string recyclingTypeName;
+    void Start()
+    {
+        recyclingTypeName = recyclableObject.itemType;
+    }
 }

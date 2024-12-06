@@ -16,16 +16,16 @@ public class RecyclableTrashCan : MonoBehaviour, Interaction
 
     public void Interact()
     {
-        if (collisionDetector != null && collisionDetector.holdingItem && collisionDetector.interactableMonoBehaviour != null)
-        {
-            RecyclableObjectData recyclableData = collisionDetector.interactableMonoBehaviour.GetComponent<RecyclableObjectData>();
+        //if (collisionDetector != null && collisionDetector.holdingItem == true && collisionDetector.interactableObject != null)
+        //{
+        //    RecyclableObjectData recyclableData = collisionDetector.interactableObject.recyclingTypeName;
 
-            if (recyclableData != null && recyclableData.recyclableObject.itemType == recyclingType)
-            {
-                totalPoints += recyclableData.recyclableObject.itemPoints;
-                Destroy(collisionDetector.interactableMonoBehaviour.gameObject);
-                collisionDetector.DropItem();
-            }
-        }
+        //    if (recyclableData != null && recyclableData.recyclableObject.itemType == recyclingType)
+        //    {
+        //        totalPoints += recyclableData.recyclableObject.itemPoints;
+        //        Destroy(collisionDetector.interactableObject.gameObject);
+        //        collisionDetector.DropItem();
+        //    }
+        //}
     }
 }
