@@ -19,13 +19,13 @@ public class RecyclableObjectGenerator : MonoBehaviour
 
     void GenerateObject()
     {
-        // Selecciona aleatoriamente un ScriptableObject de la lista
+        // Seleccionar aleatoriamente un ScriptableObject de la lista
         RecyclableObject randomRecyclableObject = recyclableObjects[Random.Range(0, recyclableObjects.Count)];
 
-        // Genera una posición aleatoria dentro del rango especificado
+        // Generar una posición aleatoria dentro del rango especificado
         Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
 
-        // Crea un nuevo GameObject vacío
+        // Crear un nuevo GameObject vacío
         GameObject newObject = new GameObject(randomRecyclableObject.itemName);
 
         // Establecer la posición aleatoria
@@ -40,7 +40,7 @@ public class RecyclableObjectGenerator : MonoBehaviour
         BoxCollider2D boxCollider = newObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
 
-        // Asigna una referencia al ScriptableObject
+        // Asignar una referencia al ScriptableObject
         RecyclableObjectData recyclableData = newObject.AddComponent<RecyclableObjectData>();
         recyclableData.recyclableObject = randomRecyclableObject;
 

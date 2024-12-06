@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    private Interaction interactableObject = null;
-    private bool holdingItem = false;
+    [SerializeField] public MonoBehaviour interactableMonoBehaviour = null;
+    public Interaction interactableObject = null;
+    public bool holdingItem = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!holdingItem || other.GetComponent<ItemPickUp>() == null)
         {
             interactableObject = other.GetComponent<Interaction>();
+            interactableMonoBehaviour = other.GetComponent<MonoBehaviour>();
         }
     }
 
@@ -28,27 +30,28 @@ public class CollisionDetector : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && interactableObject != null)
         {
             PerformAction();
+            interactableMonoBehaviour = null;
         }
     }
 
     void PerformAction()
     {
-        if (interactableObject is ItemPickUp itemPickUp)
+        if(interactableObject is ItemPickUp itemPickUp)
         {
-            if (itemPickUp.isPickedUp == false)
+            if(!holdingItem)
             {
                 holdingItem = true;
-                itemPickUp.PickUp();
-            }
-            else
-            {
-                holdingItem = false;
-                itemPickUp.PickOff();
+                itemPickUp.Interact();
             }
         }
         else
         {
             interactableObject.Interact();
         }
+    }
+
+    public void DropItem()
+    {
+        holdingItem = false;
     }
 }
