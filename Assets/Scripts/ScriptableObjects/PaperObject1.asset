@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd77491526c650d4cbb0f7ba4b4053bb, type: 3}
   m_Name: PaperObject1
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  itemSprite: {fileID: 21300000, guid: 9a51b74d50e01eb4f9f05a7dd87715b4, type: 3}
   itemName: Revistas
   itemType: Papel
   itemPoints: 20

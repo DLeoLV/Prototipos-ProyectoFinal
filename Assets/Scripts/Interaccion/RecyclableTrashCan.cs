@@ -8,24 +8,36 @@ public class RecyclableTrashCan : MonoBehaviour, Interaction
     public string recyclingType;
     public GameObject player;
     public CollisionDetector collisionDetector;
+    public int visiblePoints;
 
     void Start()
     {
         collisionDetector = player.GetComponent<CollisionDetector>();
     }
 
+    void Update()
+    {
+        visiblePoints = totalPoints;
+    }
+
     public void Interact()
     {
-        //if (collisionDetector != null && collisionDetector.holdingItem == true && collisionDetector.interactableObject != null)
-        //{
-        //    RecyclableObjectData recyclableData = collisionDetector.interactableObject.recyclingTypeName;
+        if (collisionDetector != null && collisionDetector.holdingItem && collisionDetector.currentItem != null)
+        {
+            RecyclableObjectData recyclableData = collisionDetector.currentItem.GetComponent<RecyclableObjectData>();
 
-        //    if (recyclableData != null && recyclableData.recyclableObject.itemType == recyclingType)
-        //    {
-        //        totalPoints += recyclableData.recyclableObject.itemPoints;
-        //        Destroy(collisionDetector.interactableObject.gameObject);
-        //        collisionDetector.DropItem();
-        //    }
-        //}
+            if (recyclableData != null && recyclableData.recyclableObject.itemType == recyclingType)
+            {
+                totalPoints += recyclableData.recyclableObject.itemPoints;
+                Destroy(collisionDetector.currentItem.gameObject);
+                collisionDetector.DropItem();
+            }
+            else
+            {
+                totalPoints -= recyclableData.recyclableObject.itemPoints;
+                Destroy(collisionDetector.currentItem.gameObject);
+                collisionDetector.DropItem();
+            }
+        }
     }
 }

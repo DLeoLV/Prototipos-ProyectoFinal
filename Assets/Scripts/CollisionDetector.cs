@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    [SerializeField] public MonoBehaviour leer = null;
-    public Interaction interactableObject = null;
+    [SerializeField] private MonoBehaviour leer = null;
+    private Interaction interactableObject = null;
     public bool holdingItem = false;
+    public ItemPickUp currentItem = null;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -37,11 +38,12 @@ public class CollisionDetector : MonoBehaviour
 
     void PerformAction()
     {
-        if(interactableObject is ItemPickUp itemPickUp)
+        if (interactableObject is ItemPickUp itemPickUp)
         {
-            if(!holdingItem)
+            if (!holdingItem)
             {
                 holdingItem = true;
+                currentItem = itemPickUp;
                 itemPickUp.Interact();
             }
         }
@@ -54,5 +56,11 @@ public class CollisionDetector : MonoBehaviour
     public void DropItem()
     {
         holdingItem = false;
+        currentItem = null;
+    }
+
+    public Interaction GetInteractableObject()
+    {
+        return interactableObject;
     }
 }

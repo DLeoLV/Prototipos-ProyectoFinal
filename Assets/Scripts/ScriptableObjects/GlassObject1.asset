@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd77491526c650d4cbb0f7ba4b4053bb, type: 3}
   m_Name: GlassObject1
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  itemSprite: {fileID: 21300000, guid: a7590b0699f22174b9d0810bf63a4e0c, type: 3}
   itemName: Jarra de vidrio
   itemType: Vidrio
   itemPoints: 20
