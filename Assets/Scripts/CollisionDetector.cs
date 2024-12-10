@@ -36,7 +36,7 @@ public class CollisionDetector : MonoBehaviour
         }
     }
 
-    void PerformAction()
+    public void PerformAction()
     {
         if (interactableObject is ItemPickUp itemPickUp)
         {

@@ -1,63 +1,77 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
+public class VirtualJoystick : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public RectTransform joystickBackground;
-    public RectTransform joystickBase;
+    public RectTransform joystickHandle;
+    public float moveThreshold = 1.0f;
+
+    private Vector2 joystickStartPos;
     private Vector2 inputDirection;
-    private Vector2 startPos;
-
-    public float moveSpeed = 5f;
-
-    private PlayerPhoneMovement playerMovement;
 
     void Start()
     {
-        startPos = joystickBackground.position;
-        playerMovement = GetComponentInParent<PlayerPhoneMovement>();
+        joystickStartPos = joystickBackground.position;
     }
 
     void Update()
     {
-        if (inputDirection.magnitude > 0)
+        if (Input.touchCount > 0)
         {
-            playerMovement.Move(inputDirection * moveSpeed * Time.deltaTime);
+            Touch touch = Input.GetTouch(0);
+            Vector2 touchPos = touch.position;
+
+            if (!RectTransformUtility.RectangleContainsScreenPoint(joystickBackground, touchPos))
+            {
+                ResetJoystick();
+            }
+            else
+            {
+                Vector2 direction = touchPos - (Vector2)joystickStartPos;
+                inputDirection = direction.normalized;
+
+                float distance = Mathf.Min(direction.magnitude, joystickBackground.rect.width / 2);
+                joystickHandle.anchoredPosition = new Vector2(inputDirection.x * distance, inputDirection.y * distance);
+
+                UpdatePlayerMovement(inputDirection);
+            }
         }
     }
 
-    void HandleTouchInput(Vector2 touchPos)
-    {
-        Vector2 direction = touchPos - startPos;
-        float distance = Mathf.Min(direction.magnitude, joystickBackground.rect.width / 2);
-        inputDirection = direction.normalized * distance;
-
-        joystickBase.position = startPos + inputDirection;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        joystickBackground.position = eventData.position;
-        joystickBase.position = eventData.position;
-    }
+    public void OnBeginDrag(PointerEventData eventData) { }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 direction = eventData.position - startPos;
-        float distance = Mathf.Min(direction.magnitude, joystickBackground.rect.width / 2);
-        inputDirection = direction.normalized * distance;
+        Vector2 direction = eventData.position - (Vector2)joystickStartPos;
+        inputDirection = direction.normalized;
 
-        joystickBase.position = startPos + inputDirection;
+        float distance = Mathf.Min(direction.magnitude, joystickBackground.rect.width / 2);
+        joystickHandle.anchoredPosition = new Vector2(inputDirection.x * distance, inputDirection.y * distance);
+
+        UpdatePlayerMovement(inputDirection);
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        joystickBase.position = startPos;
+        ResetJoystick();
+    }
+
+    private void ResetJoystick()
+    {
         inputDirection = Vector2.zero;
+        joystickHandle.anchoredPosition = Vector2.zero;
+        UpdatePlayerMovement(Vector2.zero);
+    }
+
+    private void UpdatePlayerMovement(Vector2 direction)
+    {
+        Vector3 move = new Vector3(direction.x, direction.y, 0f); 
+        transform.Translate(move * Time.deltaTime, Space.World);
     }
 
     public Vector2 GetInputDirection()
     {
-        return inputDirection / (joystickBackground.rect.width / 2);
+        return inputDirection;
     }
 }

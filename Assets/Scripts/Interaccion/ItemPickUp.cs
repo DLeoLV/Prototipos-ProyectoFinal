@@ -28,7 +28,7 @@ public class ItemPickUp : MonoBehaviour, Interaction
     {
         isPickedUp = true;
         transform.SetParent(myPlayer);
-        transform.localPosition = new Vector3(0f, 1f, 0f);
+        transform.localPosition = new Vector3(0f, 6f, 0f);
     }
 
     public void PickOff()

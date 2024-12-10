@@ -15,4 +15,4 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 407541abb0fff7347b1a5b73b8bddab7, type: 3}
   itemName: Desechos
   itemType: Basura
-  itemPoints: -25
+  itemPoints: 20
